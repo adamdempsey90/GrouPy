@@ -1,23 +1,15 @@
-
 # coding: utf-8
-
-# In[1]:
-
 import matplotlib.pyplot as plt
 import matplotlib.image as image
-get_ipython().magic('matplotlib inline')
 
-
-# In[14]:
-
-class Person(): 
+class Person():
     def __init__(self, name, img=None):
         self.name = name
         if img is not None:
             self.img = img
-        
+
         self.partners = [self.name]
-    
+
     def add_partner(self,person):
         if person.name not in self.partners:
             self.partners.append(person.name)
@@ -30,13 +22,13 @@ class Person():
         self.partners = [self.name]
     def remove_last_partner(self):
         self.partners = self.partners[:-1]
-    
+
     def check_availability(self,people):
         for person in people:
             if person.name not in self.partners:
                 return True
         return False
-    
+
     def __eq__(self,person):
         try:
             return self.name == person.name
@@ -44,7 +36,7 @@ class Person():
             return False
     def __neq__(self,person):
         return not self.__eq__(person)
-    
+
     def __repr__(self):
         return self.name
 
@@ -55,7 +47,7 @@ class Pool():
         self.pairs = []
         for person in people:
             self.push(person)
-    
+
     def push(self,person):
         """ Add a new person to the stack."""
         self.items.append(person)
@@ -78,7 +70,7 @@ class Pool():
         return bachelorette.name in bachelor.partners
     def swap(self,bachelor):
         """ Look through the pairs and try to swap partners"""
-        
+
         count = 0
         while count < len(self.pairs):
             pair = self.pairs.pop()
@@ -98,7 +90,7 @@ class Pool():
                 return bachelor, pair[1]
             self.pairs = [pair] + self.pairs
             count += 1
-            
+
         # We've exausted all possible pairs
         return None
     def pair(self):
@@ -121,8 +113,8 @@ class Pool():
             res = self.pair()
             if res is not None:
                 self.pairs.append(res)
-        
-       
+
+
     def pairplot(self,people, axes=None):
         num = len(people)
         if axes is None:
@@ -149,104 +141,4 @@ def next_round(people,**kwargs):
         pool.show_all(**kwargs)
     else:
         print('Everyone has been paired up!')
-
-
-# In[15]:
-
-import glob
-filenames = glob.glob('imgs/*')
-names = [x.split('imgs/')[1].split('.')[0].title() for x in filenames]
-
-people = [Person(name,img=fname) for name,fname in zip(names,filenames)]
-for p in people:
-    p.clear_partners()
-pool = Pool(people)
-
-
-# ## Round 1
-
-# In[17]:
-
-next_round(people)
-for p in people:
-    print(p.name + ': ', p.partners)
-
-
-# ## Round 2
-
-# In[296]:
-
-next_round(people)
-for p in people:
-    print(p.name + ': ', p.partners)
-
-
-# ## Round 3
-
-# In[300]:
-
-next_round(people)
-for p in people:
-    print(p.name + ': ', p.partners)
-
-
-# ## Round 4
-
-# In[298]:
-
-next_round(people)
-for p in people:
-    print(p.name + ': ', p.partners)
-
-
-# ## Round 5
-
-# In[289]:
-
-next_round(people,figsize=figsize)
-for p in people:
-    print(p.name + ': ', p.partners)
-
-
-# ## Round 6
-
-# In[290]:
-
-next_round(people,figsize=figsize)
-for p in people:
-    print(p.name + ': ', p.partners)
-
-
-# ## Round 7
-
-# In[291]:
-
-next_round(people,figsize=figsize)
-for p in people:
-    print(p.name + ': ', p.partners)
-
-
-# ## Round 8
-
-# In[292]:
-
-next_round(people,figsize=figsize)
-for p in people:
-    print(p.name + ': ', p.partners)
-
-
-# In[9]:
-
-for i in range(len(people)-1):
-    next_round(people)
-
-
-# In[8]:
-
-next_round(people)
-
-
-# In[ ]:
-
-
 
